@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 
 import ComponentOne from './components/ComponentOne';
@@ -14,17 +14,22 @@ const App = () => {
     {linkText: 'Component Four', component: <ComponentFour />},
   ];
 
+  const [page, setPage] = useState(0);
+  const getPage = tabMenu[page] ? tabMenu[page].component : null;
+
   return (
     <div className="App">
       <nav>
         <ul>
           {tabMenu.map((props, i) => (
-            <li key={i} className="link">
+            <li className={`link ${i === page ? 'active' : ''}`} key={i} onClick={() => setPage(i)}>
               {props.linkText}
             </li>
           ))}
         </ul>
       </nav>
+
+      <div className="container">{getPage}</div>
     </div>
   );
 }
